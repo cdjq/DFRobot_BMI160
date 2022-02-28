@@ -2,14 +2,14 @@
 
 '''
   @file DFRobot_BMI160.py
-  @brief The BMI160 6-axis inertial motion sensor integrates accelerometer with gyroscope and uses I2C communication.
+  @brief The BMI160 6-axis inertial motion sensor integrates accelerometer and gyroscope into one, and uses I2C communication.
   @n Features：
   @n 1. Accelerometer scale options: ±2g/±4g/±8g/±16g
   @n 2. Gyroscope scale options: ±125°/s, ±250°/s, ±500°/s, ±1000°/s, ±2000°/s
   @n 3. Accelerometer zero drift: ±40mg
   @n 4. Gyroscope zero drift: ±10°/s
   @n 5. I2C address is controlled by SDO：
-  @n   BMI160_IIC_ADDR_SDO_H or 0x69: SDO turns to high level (SDO high level by default)
+  @n   BMI160_IIC_ADDR_SDO_H or 0x69: SDO turns to high level (SDO default to be high)
   @n   BMI160_IIC_ADDR_SDO_L or 0x68：SDO turns to low level
   @n
   @n Hardware conneted table in IIC
@@ -329,7 +329,7 @@ class DFRobot_BMI160:
   '''Enum status mode'''
   eSTATUS_OK                   = 0     #Normal status, no error
   eSTATUS_ERR                  = 1     #Error status
-  eSTATUS_ERR_DEV_NOT_DETECTED = 2     #The device does not detect
+  eSTATUS_ERR_DEV_NOT_DETECTED = 2     #Device not detected
   eSTATUS_ERR_PARAM            = 3     #Parameter error
 
   def __init__(self):
@@ -343,8 +343,8 @@ class DFRobot_BMI160:
       BMI160_OK                         or  0 : init succeeded, no error
       BMI160_E_NULL_PTR                 or -1 : the parameters is empty
       BMI160_E_COM_FAIL                 or -2 : interaction failed
-      BMI160_E_DEV_NOT_FOUND            or -3 : device is not connected
-      BMI160_E_OUT_OF_RANGE             or -4 : range is out of sensor range
+      BMI160_E_DEV_NOT_FOUND            or -3 : device not connected
+      BMI160_E_OUT_OF_RANGE             or -4 : out of sensor range
       BMI160_E_INVALID_INPUT            or -5 : invalid input
       BMI160_E_ACCEL_ODR_BW_INVALID     or -6 : accelerometer data output rate is invalid
       BMI160_E_GYRO_ODR_BW_INVALID      or -7 : gyroscope data output rate is invalid
@@ -371,8 +371,8 @@ class DFRobot_BMI160:
     '''
       @brief Configure interrupt pin
       @param intNum: The INT pin of sensor, INT1 or INT2:
-      @n     1 : The INT pin of sensor, INT1 or INT2
-      @n     2 : The INT pin of sensor, INT1 or INT2
+      @n     1 : The INT1 pin of sensor
+      @n     2 : The INT2 pin of sensor
       @return Error code:
       BMI160_OK     or  0 : Config succeeded
       others value        : Config failed
@@ -429,7 +429,7 @@ class DFRobot_BMI160:
 
   def soft_reset(self):
     '''
-      @brief Soft reset, after reset
+      @brief Soft reset
       @param model: Power mode type
       @n     step_normal_power_mode:  Count step in normal power mode
       @n     step_lower_power_mode :  Count step in low power mode
@@ -448,9 +448,9 @@ class DFRobot_BMI160:
       @brief Get sensor data, including data of gyroscope, accelerometer, etc.
       @return Return data of dictionary type, the format is as follows：
       @n      {'accel':{'x':0, 'y':0, 'z':0}, 'gyro':{'x':0, 'y':0, 'z':0}}
-      @n Note: it's the raw data, process it to get the correct data：
-      @n   Gyroscope: gyroscope data per axis required *3.14/180.0, after calculation, unit is rad/s
-      @n   Accelerometer: accelerometer data per axis required //16384.0, after calculation, unit is g
+      @n Note: it's raw data, process it to get the correct data：
+      @n   Gyroscope: gyroscope data of each axis *3.14/180.0, after calculation, unit is rad/s
+      @n   Accelerometer: accelerometer data of each axis //16384.0, after calculation, unit is g
     '''
     sensor = {'accel':{'x':0, 'y':0, 'z':0}, 'gyro':{'x':0, 'y':0, 'z':0}}
     rslt = self._get_raw_data()
@@ -469,8 +469,8 @@ class DFRobot_BMI160:
       @brief Get accelerometer data
       @return Return data of dictionary type, the format is as follows：
       @n      {'accel':{'x':0, 'y':0, 'z':0}}
-      @n Note: it's the raw data, process it to get the correct data：
-      @n   Accelerometer: accelerometer data per axis required //16384.0, after calculation, unit is g
+      @n Note: it's raw data, process it to get the correct data：
+      @n   Accelerometer: accelerometer data of each axis//16384.0, after calculation, unit is g
     '''
     senor = {'accel':{'x':0, 'y':0, 'z':0}}
     if self._update & 0x01 != 0x01:
@@ -486,8 +486,8 @@ class DFRobot_BMI160:
       @brief Get gyroscope data
       @return Return data of dictionary type, the format is as follows：
       @n      {'gyro':{'x':0, 'y':0, 'z':0}}
-      @n Note: it's the raw data, process it to get the correct data：
-      @n   Gyroscope: gyroscope data per axis required *3.14/180.0, after calculation, unit is rad/s
+      @n Note: it's raw data, process it to get the correct data：
+      @n   Gyroscope: gyroscope data of each axis *3.14/180.0, after calculation, unit is rad/s
     '''
     senor = {'gyro':{'x':0, 'y':0, 'z':0}}
     if self._update & 0x02 != 0x02:

@@ -60,7 +60,7 @@ void setup(){
     while(1);
   }
   
-  //set the bmi160 power model,contains:stepNormalPowerMode,stepLowPowerMode
+  //set the bmi160 power model, contains:stepNormalPowerMode,stepLowPowerMode
   if (bmi160.setStepPowerMode(bmi160.stepNormalPowerMode) != BMI160_OK){
     Serial.println("set setStepPowerMode fail");
     while(1);

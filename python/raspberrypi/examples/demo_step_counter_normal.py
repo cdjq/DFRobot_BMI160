@@ -3,8 +3,8 @@
 '''
    @file demo_step_counter_normalpy
    @brief Through the example, you can get the sensor data which means step counter.
-   @n set step counter power mode by setStepPowerMode(stepNormalPowerMode means normal model,stepLowPowerMode means low power model)
-   @n upload interrupt number by set_int (choose int1 or int2)  
+   @n Set step counter power mode by setStepPowerMode(stepNormalPowerMode means normal model, stepLowPowerMode means low power model)
+   @n Upload interrupt number by set_int (choose int1 or int2)  
    @n data from int1 and int2 read in readStepCounter
   
    @n Hardware conneted table in IIC
@@ -61,8 +61,8 @@ if __name__ == "__main__":
     BMI160_OK                         or  0 : init succeeded, no error
     BMI160_E_NULL_PTR                 or -1 : the parameters is empty
     BMI160_E_COM_FAIL                 or -2 : interaction failed
-    BMI160_E_DEV_NOT_FOUND            or -3 : device is not connected
-    BMI160_E_OUT_OF_RANGE             or -4 : range is out of sensor range
+    BMI160_E_DEV_NOT_FOUND            or -3 : device not connected
+    BMI160_E_OUT_OF_RANGE             or -4 : out of sensor range
     BMI160_E_INVALID_INPUT            or -5 : invalid input
     BMI160_E_ACCEL_ODR_BW_INVALID     or -6 : accelerometer data output rate is invalid
     BMI160_E_GYRO_ODR_BW_INVALID      or -7 : gyroscope data output rate is invalid

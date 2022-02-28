@@ -2,7 +2,7 @@
 
 '''
    @file demo_get_accel_gyro.py
-   @brief Data of gyroscope, accelerometer, etc of BMI160 6-axis sensor
+   @brief Get BMI160 6-axis sensor data including gyroscope, accelerometer, etc.
    @n ----------------------------------------------------------------------------------------
    @n  Sensor      |                                     raspberry pi                         |
    @n -----------------------------------------------------------------------------------------
@@ -45,8 +45,8 @@ if __name__ == "__main__":
     BMI160_OK                         or  0 : init succeeded, no error
     BMI160_E_NULL_PTR                 or -1 : the parameters is empty
     BMI160_E_COM_FAIL                 or -2 : interaction failed
-    BMI160_E_DEV_NOT_FOUND            or -3 : device is not connected
-    BMI160_E_OUT_OF_RANGE             or -4 : range is out of sensor range
+    BMI160_E_DEV_NOT_FOUND            or -3 : device not connected
+    BMI160_E_OUT_OF_RANGE             or -4 : out of sensor range
     BMI160_E_INVALID_INPUT            or -5 : invalid input
     BMI160_E_ACCEL_ODR_BW_INVALID     or -6 : accelerometer data output rate is invalid
     BMI160_E_GYRO_ODR_BW_INVALID      or -7 : gyroscope data output rate is invalid
@@ -65,9 +65,9 @@ if __name__ == "__main__":
       @brief Get sensor data, including data of gyroscope, accelerometer, etc.
       @return Return data of dictionary type, the format is as follows：
       @n      {'accel':{'x':0, 'y':0, 'z':0}, 'gyro':{'x':0, 'y':0, 'z':0}}
-      @n Note: it's the raw data, process it to get the correct data：
-      @n   Gyroscope: gyroscope data per axis required *3.14/180.0, after calculation, unit is rad/s
-      @n   Accelerometer: accelerometer data per axis required //16384.0, after calculation, unit is g
+      @n Note: it's raw data, process it to get the correct data：
+      @n   Gyroscope: each axis of gyroscope data *3.14/180.0, after calculation, unit is rad/s
+      @n   Accelerometer: each axis of accelerometer data//16384.0, after calculation, unit is g
     '''
     data = bmi.get_sensor_data()
     print("gyro  :  x: %.3f rad/s,  y: %.3f rad/s,  z: %.3f rad/s"%(data['gyro']['x']*3.14/180.0, data['gyro']['y']*3.14/180.0, data['gyro']['z']*3.14/180.0))

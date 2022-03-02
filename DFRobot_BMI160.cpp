@@ -1322,3 +1322,37 @@ int8_t DFRobot_BMI160::readStepCounter(uint16_t *stepVal, struct bmi160Dev *dev)
 
   return rslt; 
 }
+
+void DFRobot_BMI160::test(){
+  Wire.beginTransmission(0x69);
+  Wire.write(0x74);
+  Wire.write(0x00);
+  Wire.write(0x00);
+  Wire.write(0x00);
+  Wire.endTransmission(true);
+  Wire.beginTransmission(0x69);
+  Wire.write(0x7A);
+  Wire.write(0x15);
+  Wire.write(0x0B);
+  //Wire.write(0x00);
+  Wire.endTransmission(true);
+  uint8_t val = 0;
+  for(uint8_t i = 0; i <= 0x7E; i++){
+    uint8_t val = 0;
+    if(i%10 == 0) Serial.println();
+    Serial.print("REG: ");
+    if(i < 16) Serial.print(0);
+    Serial.print(i,HEX);
+    Serial.print("=");
+    Wire.beginTransmission(0x69);
+    Wire.write(i);
+    Wire.endTransmission(true);
+    delay(10);
+    Wire.requestFrom(0x69,1);
+
+    val=Wire.read();
+    if(val < 16) Serial.print(0);
+    Serial.print(val,HEX);
+    Serial.print("\t");
+  }
+}
